@@ -64,6 +64,7 @@ text(x = x1, y = round(total.PM25.emissions$Emissions/1000,2), label = round(tot
 
 ### 2. Have total emissions from PM2.5 decreased in the Baltimore City, Maryland from 1999 to 2008?
 ![](https://github.com/jacintod/ExData_Plotting2/blob/master/Project/plot2.png)
+
 ## Execution
 ```R
 # Print the current working directory
@@ -120,6 +121,7 @@ text(x = plot2
 ```
 ### 3. Of the four types of sources indicated by the type (point, nonpoint, onroad, nonroad) variable, which of these four sources have seen decreases in emissions from 1999-2008 for Baltimore City? Which have seen increases in emissions from 1999-2008?
 ![](https://github.com/jacintod/ExData_Plotting2/blob/master/Project/plot3.png)
+
 ## Execution
 ```R
 # Print the current working directory
@@ -170,6 +172,7 @@ print(plot3)
 ```
 ### 4.Across the United States, how have emissions from coal combustion-related sources changed from 1999-2008?
 ![](https://github.com/jacintod/ExData_Plotting2/blob/master/Project/plot4.png)
+
 ## Execution
 ```R
 # Print the current working directory
@@ -223,7 +226,103 @@ print(plot4)
 ```
 ### 5. How have emissions from motor vehicle sources changed from 1999-2008 in Baltimore City?
 ![](https://github.com/jacintod/ExData_Plotting2/blob/master/Project/plot5.png)
+
 ## Execution
 ```R
-![](https://github.com/jacintod/ExData_Plotting2/blob/master/Project/plot5.R)
+# Print the current working directory
+print(getwd())
+# Declare our working variables
+data.dir <- "./Data"
+file.name <- "./Data/NEI_data.zip"
+url       <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip"
+zip.file <- "./Data/NEI_data.zip"
+
+# Check if the data is downloaded and download when applicable. This piece of code will firstly check to see
+# if the Data Folder exisits, If Not, Create and Download the file. 
+if (!dir.exists(data.dir)) {
+        dir.create(data.dir, showWarnings = TRUE)
+        print("Data directory doesnt exist, so it was created")
+}
+# Check to see if the data set exists, if not download it 
+if (!file.exists(zip.file)) {
+        # Download and extract the data set files
+        download.file(url, destfile = file.name)
+        unzip(file.name,exdir = data.dir)
+        print("Downloaded the source file for plotting..")
+}
+
+# Read downloaded data files
+# read national emissions data
+NEI <- readRDS("./Data/summarySCC_PM25.rds")
+#read source code classification data
+SCC <- readRDS("./Data/Source_Classification_Code.rds")
+
+require(ggplot2)
+require(dplyr)
+
+balti.em <- summarise(group_by(filter(NEI, fips == "24510" & type=="ON-ROAD"), year), Emissions = sum(Emissions))
+
+plot4 <- ggplot(balti.em, aes(x=factor(year), y=Emissions,fill=year, label = round(Emissions,2))) +
+                geom_bar(stat="identity") +
+                xlab("year") +
+                ylab(expression("total PM"[2.5]*" emissions in tons")) +
+                ggtitle("Emissions from motor vehicle sources in Baltimore City")+
+                geom_label(aes(fill = year),colour = "white", fontface = "bold")
+print(plot4)
+```
+### 6. Compare emissions from motor vehicle sources in Baltimore City with emissions from motor vehicle sources in Los Angeles County, California. Which city has seen greater changes over time in motor vehicle emissions?
+![](https://github.com/jacintod/ExData_Plotting2/blob/master/Project/plot6.png)
+
+## Execution
+```R
+# Print the current working directory
+print(getwd())
+# Declare our working variables
+data.dir <- "./Data"
+file.name <- "./Data/NEI_data.zip"
+url       <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip"
+zip.file <- "./Data/NEI_data.zip"
+
+# Check if the data is downloaded and download when applicable. This piece of code will firstly check to see
+# if the Data Folder exisits, If Not, Create and Download the file. 
+if (!dir.exists(data.dir)) {
+        dir.create(data.dir, showWarnings = TRUE)
+        print("Data directory doesnt exist, so it was created")
+}
+# Check to see if the data set exists, if not download it 
+if (!file.exists(zip.file)) {
+        # Download and extract the data set files
+        download.file(url, destfile = file.name)
+        unzip(file.name,exdir = data.dir)
+        print("Downloaded the source file for plotting..")
+}
+
+# Read downloaded data files
+# read national emissions data
+NEI <- readRDS("./Data/summarySCC_PM25.rds")
+#read source code classification data
+SCC <- readRDS("./Data/Source_Classification_Code.rds")
+
+require(ggplot2)
+require(dplyr)
+
+balti.em <- summarise(group_by(filter(NEI, fips == "24510" & type=="ON-ROAD"), year), Emissions = sum(Emissions))
+la.em <- summarise(group_by(filter(NEI, fips == "06037" & type=="ON-ROAD"), year), Emissions = sum(Emissions))
+# merge the datasets 
+balti.em$County <- "Baltimore City, MD"
+la.em$County <- "Los Angeles County, CA"
+both.em <- rbind(balti.em, la.em)
+
+plot6 <- ggplot(both.em, aes(x = year, y = Emissions, fill = County, label = round(Emissions, 2))) +
+        geom_bar(stat = "identity") +
+        facet_grid(. ~ County) +
+        ylab(expression('PM'[2.5])) + 
+        xlab('Year') + 
+        scale_y_continuous(limits = c(0, 4800)) +
+        theme(legend.position='none') +
+        ggtitle('Total Emissions of Motor Vehicle Sources\nLos Angeles County, California vs. Baltimore City, Maryland') +
+        geom_text(aes(label=round(Emissions,0), size=1, hjust=0.5, vjust=-1))
+
+print(plot6)
+
 ```
