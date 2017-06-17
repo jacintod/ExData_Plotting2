@@ -118,6 +118,9 @@ text(x = plot2
      , cex = 0.8
      , col = "black"
 )
+
+print(plot2)
+
 ```
 ### 3. Of the four types of sources indicated by the type (point, nonpoint, onroad, nonroad) variable, which of these four sources have seen decreases in emissions from 1999-2008 for Baltimore City? Which have seen increases in emissions from 1999-2008?
 ![](https://github.com/jacintod/ExData_Plotting2/blob/master/Project/plot3.png)
@@ -169,6 +172,7 @@ plot3 <- ggplot(data = balti.em, aes(x = year, y = log10(Emissions))) +
         geom_jitter(alpha = 0.13)
 
 print(plot3)
+
 ```
 ### 4.Across the United States, how have emissions from coal combustion-related sources changed from 1999-2008?
 ![](https://github.com/jacintod/ExData_Plotting2/blob/master/Project/plot4.png)
@@ -223,6 +227,7 @@ plot4 <- ggplot(data = mrg.sum, aes(x = year, y = Emissions / 1000)) +
         scale_color_gradient(low = 'black', high = 'red')
 
 print(plot4)
+
 ```
 ### 5. How have emissions from motor vehicle sources changed from 1999-2008 in Baltimore City?
 ![](https://github.com/jacintod/ExData_Plotting2/blob/master/Project/plot5.png)
@@ -262,13 +267,14 @@ require(dplyr)
 
 balti.em <- summarise(group_by(filter(NEI, fips == "24510" & type=="ON-ROAD"), year), Emissions = sum(Emissions))
 
-plot4 <- ggplot(balti.em, aes(x=factor(year), y=Emissions,fill=year, label = round(Emissions,2))) +
+plot5 <- ggplot(balti.em, aes(x=factor(year), y=Emissions,fill=year, label = round(Emissions,2))) +
                 geom_bar(stat="identity") +
                 xlab("year") +
                 ylab(expression("total PM"[2.5]*" emissions in tons")) +
                 ggtitle("Emissions from motor vehicle sources in Baltimore City")+
                 geom_label(aes(fill = year),colour = "white", fontface = "bold")
-print(plot4)
+print(plot5)
+
 ```
 ### 6. Compare emissions from motor vehicle sources in Baltimore City with emissions from motor vehicle sources in Los Angeles County, California. Which city has seen greater changes over time in motor vehicle emissions?
 ![](https://github.com/jacintod/ExData_Plotting2/blob/master/Project/plot6.png)

@@ -31,11 +31,11 @@ require(dplyr)
 
 balti.em <- summarise(group_by(filter(NEI, fips == "24510" & type=="ON-ROAD"), year), Emissions = sum(Emissions))
 
-plot4 <- ggplot(balti.em, aes(x=factor(year), y=Emissions,fill=year, label = round(Emissions,2))) +
+plot5 <- ggplot(balti.em, aes(x=factor(year), y=Emissions,fill=year, label = round(Emissions,2))) +
                 geom_bar(stat="identity") +
                 xlab("year") +
                 ylab(expression("total PM"[2.5]*" emissions in tons")) +
                 ggtitle("Emissions from motor vehicle sources in Baltimore City")+
                 geom_label(aes(fill = year),colour = "white", fontface = "bold")
-print(plot4)
+print(plot5)
 

@@ -49,3 +49,5 @@ text(x = plot2
      , cex = 0.8
      , col = "black"
 )
+
+print(plot2)
