@@ -168,7 +168,5 @@ plot3 <- ggplot(data = balti.em, aes(x = year, y = log10(Emissions))) +
 
 print(plot3)
 ```
-#### An alternative plot for Question 3. 
-![](https://github.com/jacintod/ExData_Plotting2/blob/master/Project/plot3_alt.png)
 
 
