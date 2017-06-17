@@ -1,6 +1,6 @@
-## Exploratory Data Analysis Project 2
+# _Exploratory Data Analysis Project 2_
 
-# About
+## About
 This project is for the Coursera Data Science Specialisation : Exploratory Data Analysis. The objective of this project is to explore data and produce some data visualizations 
 using some of the visualization libraries in R. This project is based on the Selcuk Fidan, TomLous, mmorales, candidobrau respective publications. 
 
