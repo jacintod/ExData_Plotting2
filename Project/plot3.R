@@ -26,26 +26,20 @@ NEI <- readRDS("./Data/summarySCC_PM25.rds")
 #read source code classification data
 SCC <- readRDS("./Data/Source_Classification_Code.rds")
 
-# Load our required libraries
+require(ggplot2)
 require(dplyr)
 
-balti.em <- summarise(group_by(filter(NEI, fips == "24510"), year), sumBaltiEM = sum(Emissions))
-# str(total.em)   # we have the 4 years here
+balti.em <- subset(NEI, fips == 24510)
+balti.em$year <- factor(balti.em$year, levels=c('1999', '2002', '2005', '2008'))  # !! important !! otherwise, only one boxplot per Type
 
-colo <- c("red3", "green3", "blue3", "yellow3")
-plot2 <- barplot(balti.em$sumBaltiEM/1000
-                 , names = balti.em$year
-                 , xlab = "year"
-                 , ylab = "total PM'[2.5]*' emission in kilotons"
-                 , ylim = c(0,4)
-                 , main = expression('Total PM'[2.5]*' emissions for Baltimore City Maryland at various years in kilotons')
-                 , col = colo
-)
-## Add text at top of bars
-text(x = plot2
-     , y = round(balti.em$sumBaltiEM/1000,2)
-     , label = round(balti.em$sumBaltiEM/1000,2)
-     , pos = 3
-     , cex = 0.8
-     , col = "black"
-)
+plot3 <- ggplot(data = balti.em, aes(x = year, y = log10(Emissions))) +
+        geom_boxplot(aes(fill = type)) +
+        stat_boxplot(geom = "errorbar") +
+        facet_grid( . ~ type) +
+        guides(fill = FALSE) +
+        ylab(expression(paste('Log', ' of PM'[2.5], ' Emissions'))) +
+        xlab('Year') + 
+        ggtitle('Emissions per Type in Baltimore City, Maryland') +
+        geom_jitter(alpha = 0.13)
+
+print(plot3)

@@ -26,26 +26,20 @@ NEI <- readRDS("./Data/summarySCC_PM25.rds")
 #read source code classification data
 SCC <- readRDS("./Data/Source_Classification_Code.rds")
 
-# Load our required libraries
+require(ggplot2)
 require(dplyr)
 
-balti.em <- summarise(group_by(filter(NEI, fips == "24510"), year), sumBaltiEM = sum(Emissions))
-# str(total.em)   # we have the 4 years here
+# Group total NEI emissions per year:
+balti.em<-summarise(group_by(filter(NEI, fips == "24510"), year,type), Emissions=sum(Emissions))
+clrs <- c("red", "green", "blue", "yellow")
+plot3_alt <- ggplot(balti.em, aes(x=factor(year), y=Emissions, fill=type,label = round(Emissions,2))) +
+        geom_bar(stat="identity") +
+        #geom_bar(position = 'dodge')+
+        facet_grid(. ~ type) +
+        xlab("year") +
+        ylab(expression("total PM"[2.5]*" emission in tons")) +
+        ggtitle(expression("PM"[2.5]*paste(" emissions in Baltimore ",
+                                           "City by various source types", sep="")))+
+        geom_label(aes(fill = type), colour = "white", fontface = "bold")
 
-colo <- c("red3", "green3", "blue3", "yellow3")
-plot2 <- barplot(balti.em$sumBaltiEM/1000
-                 , names = balti.em$year
-                 , xlab = "year"
-                 , ylab = "total PM'[2.5]*' emission in kilotons"
-                 , ylim = c(0,4)
-                 , main = expression('Total PM'[2.5]*' emissions for Baltimore City Maryland at various years in kilotons')
-                 , col = colo
-)
-## Add text at top of bars
-text(x = plot2
-     , y = round(balti.em$sumBaltiEM/1000,2)
-     , label = round(balti.em$sumBaltiEM/1000,2)
-     , pos = 3
-     , cex = 0.8
-     , col = "black"
-)
+print(plot3_alt)
