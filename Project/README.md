@@ -94,9 +94,6 @@ NEI <- readRDS("./Data/summarySCC_PM25.rds")
 #read source code classification data
 SCC <- readRDS("./Data/Source_Classification_Code.rds")
 
-number.add.width<-800    # width length to make the changes faster
-number.add.height<-800   # height length to make the changes faster
-
 # Load our required libraries
 require(dplyr)
 
@@ -123,6 +120,7 @@ text(x = plot2
 ```
 ### 3. Of the four types of sources indicated by the type (point, nonpoint, onroad, nonroad) variable, which of these four sources have seen decreases in emissions from 1999-2008 for Baltimore City? Which have seen increases in emissions from 1999-2008?
 ![](https://github.com/jacintod/ExData_Plotting2/blob/master/Project/plot3.png)
+## Execution
 ```R
 # Print the current working directory
 print(getwd())
