@@ -1,6 +1,6 @@
 # _Exploratory Data Analysis Project 2_
 
-##### About
+#### About
 This project is for the Coursera Data Science Specialisation : Exploratory Data Analysis. The objective of this project is to explore data and produce some data visualizations 
 using some of the visualization libraries in R. This project is based on the Selcuk Fidan, TomLous, mmorales, candidobrau respective publications. 
 
@@ -10,7 +10,7 @@ Fine particulate matter (PM2.5) is an ambient air pollutant for which there is s
 For each year and for each type of PM source, the NEI records how many tons of PM2.5 were emitted from that source over the course of the entire year. The data that you will use for this assignment are for 1999, 2002, 2005, and 2008.
 
 
-1. Have total emissions from PM2.5 decreased in the United States from 1999 to 2008?
+###1. Have total emissions from PM2.5 decreased in the United States from 1999 to 2008?
 ![](https://github.com/jacintod/ExData_Plotting2/blob/master/Project/plot1.png)
 
 ## Execution
