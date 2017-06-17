@@ -221,4 +221,9 @@ plot4 <- ggplot(data = mrg.sum, aes(x = year, y = Emissions / 1000)) +
 
 print(plot4)
 ```
-
+### 5. How have emissions from motor vehicle sources changed from 1999-2008 in Baltimore City?
+![](https://github.com/jacintod/ExData_Plotting2/blob/master/Project/plot5.png)
+## Execution
+```R
+![](https://github.com/jacintod/ExData_Plotting2/blob/master/Project/plot5.R)
+```
